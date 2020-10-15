@@ -8,3 +8,7 @@ The goal of this multistrage dockerfile is to clone, build and run TASKANA insid
 * [TASKANA](https://github.com/taskana/taskana) - The open source task management library
 * Maven
 * Angular
+
+# How to run
+* docker build -t taskana_multistage .
+* docker run -p 8080:8080 taskana_multistage
