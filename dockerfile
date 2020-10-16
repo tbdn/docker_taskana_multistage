@@ -1,21 +1,15 @@
 FROM openjdk:8-jdk-alpine AS buildstage
 RUN apk update
-RUN apk add git
+RUN apk add git maven npm
 RUN mkdir /home/taskana && cd /home/taskana && git clone -b dockerized https://github.com/tbdn/taskana.git .
+
 WORKDIR /home/taskana
-
-RUN apk update
-
-RUN apk add maven
-RUN apk add npm
-
-RUN cd /home/taskana && mvn clean install
+RUN mvn clean install
 
 WORKDIR /home/taskana/web
-
-RUN npm install && npm install -g @angular/cli@latest && npm run build:prod
-
-WORKDIR /home/taskana/rest
+RUN npm install 
+RUN npm install -g @angular/cli@latest
+RUN npm run build:prod
 
 FROM buildstage AS target-stage
 FROM openjdk:8-jre-alpine
